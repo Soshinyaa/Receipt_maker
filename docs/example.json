@@ -1,0 +1,60 @@
+{
+    "BankTitle": "SomeBank",
+    "Org": "Organization",
+    "OrgInn" : "123456789",
+    "AccNumb" : "555444666333",
+    "Bankname" : "Bankname",
+    "BankBic" : "BankBic",
+    "Data": [
+        {
+            "Group": "Croup name",
+            "Data": [
+                {
+                    "Payer": "",
+                    "PayerAddress" : "",
+                    "PayerInn" : "",
+                    "SumPayment" : "",
+                    "SumService" : "",
+                    "SumTotal" : "",
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "",
+                    "PayerAddress" : "",
+                    "PayerInn" : "",
+                    "SumPayment" : "",
+                    "SumService" : "",
+                    "SumTotal" : "",
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                }
+            ]
+        },
+        {
+            "Group": "Another group",
+            "Data": [
+                {
+                    "Payer": "",
+                    "PayerAddress" : "",
+                    "PayerInn" : "",
+                    "SumPayment" : "",
+                    "SumService" : "",
+                    "SumTotal" : "",
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "",
+                    "PayerAddress" : "",
+                    "PayerInn" : "",
+                    "SumPayment" : "",
+                    "SumService" : "",
+                    "SumTotal" : "",
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                }
+            ]
+        }
+    ]
+}
