@@ -1,4 +1,5 @@
 {
+    "Filename": "",
     "BankTitle": "SomeBank",
     "Org": "Organization",
     "OrgInn" : "123456789",
@@ -10,47 +11,205 @@
             "Group": "Croup name",
             "Data": [
                 {
-                    "Payer": "",
+                    "Payer": "Иванов Иван Иваныч",
                     "PayerAddress" : "",
+                    "Purpose" : "some purpose",
                     "PayerInn" : "",
-                    "SumPayment" : "",
-                    "SumService" : "",
-                    "SumTotal" : "",
+                    "SumPayment" : 180000, 
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
                     "Date" : "",	
                     "QrCodeText" : "some text"
                 },
                 {
-                    "Payer": "",
+                    "Payer": "Gtnhjd gtnh",
                     "PayerAddress" : "",
+                    "Purpose" : "some purpose",
                     "PayerInn" : "",
-                    "SumPayment" : "",
-                    "SumService" : "",
-                    "SumTotal" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Test User",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Test User Userovich",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Иванов Иван Иваныч",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Gtnhjd gtnh",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Test User",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Test User Userovich",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Test User Userovich",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
                     "Date" : "",	
                     "QrCodeText" : "some text"
                 }
             ]
         },
         {
-            "Group": "Another group",
+            "Group": "Another Croup name",
             "Data": [
                 {
-                    "Payer": "",
+                    "Payer": "Иванов Иван Иваныч",
                     "PayerAddress" : "",
+                    "Purpose" : "some purpose",
                     "PayerInn" : "",
-                    "SumPayment" : "",
-                    "SumService" : "",
-                    "SumTotal" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
                     "Date" : "",	
                     "QrCodeText" : "some text"
                 },
                 {
-                    "Payer": "",
+                    "Payer": "Gtnhjd gtnh",
                     "PayerAddress" : "",
+                    "Purpose" : "some purpose",
                     "PayerInn" : "",
-                    "SumPayment" : "",
-                    "SumService" : "",
-                    "SumTotal" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Test User",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Test User Userovich",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Иванов Иван Иваныч",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Gtnhjd gtnh",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Test User",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Test User Userovich",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
+                    "Date" : "",	
+                    "QrCodeText" : "some text"
+                },
+                {
+                    "Payer": "Test User Userovich",
+                    "PayerAddress" : "",
+                    "Purpose" : "some purpose",
+                    "PayerInn" : "",
+                    "SumPayment" : 180000,
+                    "SumService" : 0,
+                    "SumTotal" : 180000,
                     "Date" : "",	
                     "QrCodeText" : "some text"
                 }

@@ -14,9 +14,13 @@ styles = getSampleStyleSheet()
 pdfmetrics.registerFont(TTFont('calibri', "./docs/calibri.ttf"))
 
 RECEIPT_POS = [1, 210, 419, 628]  # Позиции по вертикали (y) для каждой квитанции
-GROUP_NAME_POS = [] # x, y
-PAGE_POS = [] # x, y
-def create_receipt(json_data: str, FilePDF:str='Квитанции.pdf'):
+GROUP_NAME_POS = [-835, 580] # x, y
+PAGE_POS = [580, 7] # x, y
+def create_receipt(json_data: dict, FilePDF:str='Report.pdf'):
+
+    if json_data["Filename"]:
+        FilePDF = json_data["Filename"]
+
     c = canvas.Canvas(FilePDF, pagesize=A4)
 
     def exchange(sum:int):
@@ -73,24 +77,24 @@ def create_receipt(json_data: str, FilePDF:str='Квитанции.pdf'):
         
         os.remove(f"temp_{PayerData['Payer']}.png")
 
-    try:
-        json_data = json.loads(json_data)
-    except json.JSONDecodeError:
-        return 'Ошибка при парсинге JSON'
+    
     
     if len(json_data["Data"]) == 0:
         return 'Нет информации о плательщиках'
     
     receipt_index = 1
     page = 1
-    for group in json_data['Data']:
-        for payer in group:
-            if json_data['Data'][group]["Data"][payer]["SumTotal"] > 0:
-                draw_receipt(RECEIPT_POS[-1*receipt_index], json_data['Data'][group]["Data"][payer])
+    for group_ind, group in enumerate(json_data['Data']):
+        for payer_ind, payer in enumerate(json_data['Data'][group_ind]["Data"]):
+            if json_data['Data'][group_ind]["Data"][payer_ind]["SumTotal"] > 0:
+                draw_receipt(RECEIPT_POS[-1*receipt_index], json_data['Data'][group_ind]["Data"][payer_ind])
+                c.setFont('calibri', 10)
                 if receipt_index == 1:
-                    if json_data['Data'][group]['Group']:
-                        c.drawString(GROUP_NAME_POS[0], GROUP_NAME_POS[1], json_data['Data'][group]['Group'])
-                    c.drawString(PAGE_POS[0], PAGE_POS[1], page)
+                    if json_data['Data'][group_ind]['Group']:
+                        c.rotate(-90)
+                        c.drawString(GROUP_NAME_POS[0], GROUP_NAME_POS[1], json_data['Data'][group_ind]['Group'])
+                        c.rotate(90)
+                    c.drawString(PAGE_POS[0], PAGE_POS[1], f'{page}')
                     
                 if receipt_index == 4:
                     receipt_index = 1
@@ -100,10 +104,4 @@ def create_receipt(json_data: str, FilePDF:str='Квитанции.pdf'):
                     receipt_index += 1
     
     c.save()
-    return FilePDF
-
-
-
-
-    
-                
+    return FilePDF                
