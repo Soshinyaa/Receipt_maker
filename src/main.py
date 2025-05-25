@@ -9,7 +9,7 @@ import seqlog
 import logging
 
 seqlog.log_to_seq(
-   server_url=f"http://{os.environ['ip']}:5341/",
+   server_url=f"http://localhost:5341/",
    api_key=os.environ['log_token'],
    level=logging.INFO,
    batch_size=10,
