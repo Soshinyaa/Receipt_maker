@@ -4,11 +4,25 @@ from pydantic import BaseModel
 from typing import List, Optional
 from tempfile import NamedTemporaryFile
 from funcs import *
+import os
+import seqlog
 import logging
 
+seqlog.log_to_seq(
+   server_url=f"http://{os.environ['ip']}:5341/",
+   api_key=os.environ['log_token'],
+   level=logging.INFO,
+   batch_size=10,
+   auto_flush_timeout=10,  # seconds
+   override_root_logger=True,
+   json_encoder_class=json.encoder.JSONEncoder,  # Optional; only specify this if you want to use a custom JSON encoder
+   support_extra_properties=True # Optional; only specify this if you want to pass additional log record properties via the "extra" argument.
+)
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+seqlog.set_global_log_properties(
+    App=os.environ['App']
+)
+
 app = FastAPI()
 
 # Модели для входных данных
@@ -41,6 +55,7 @@ class InputData(BaseModel):
 @app.post("/create_receipt/")
 async def calculate(data: InputData):
     try:
+        logging.info("Получен post запрос", data=data)
         # Создаем временный файл
         with NamedTemporaryFile(delete=False, suffix=".pdf"):
             temp_filename = create_receipt(data.model_dump())  # Создаем PDF во временном файле
@@ -50,9 +65,9 @@ async def calculate(data: InputData):
             try:
                 if os.path.exists(temp_filename):
                     os.remove(temp_filename)
-                    logger.info(f"Файл {temp_filename} удален.")
-            except Exception as e:
-                logger.error(f"Ошибка при удалении файла: {e}")
+                    logging.info("Файл {temp_filename} удален.", temp_filename=temp_filename)
+            except Exception as error:
+                logging.error("Ошибка при удалении файла: {error}", error=error)
 
         return StreamingResponse(
             open(temp_filename, "rb"),
