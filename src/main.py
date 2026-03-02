@@ -1,27 +1,14 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from typing import List, Optional
 from tempfile import NamedTemporaryFile
 from funcs import *
 import os
-import seqlog
 import logging
 
-seqlog.log_to_seq(
-   server_url=f"http://localhost:5341/",
-   api_key=os.environ['log_token'],
-   level=logging.INFO,
-   batch_size=10,
-   auto_flush_timeout=10,  # seconds
-   override_root_logger=True,
-   json_encoder_class=json.encoder.JSONEncoder,  # Optional; only specify this if you want to use a custom JSON encoder
-   support_extra_properties=True # Optional; only specify this if you want to pass additional log record properties via the "extra" argument.
-)
-
-seqlog.set_global_log_properties(
-    App=os.environ['App']
-)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -51,32 +38,57 @@ class InputData(BaseModel):
     BankBic: str
     Data: List[GroupData]
 
-# Эндпоинт для обработки POST-запроса
-@app.post("/create_receipt/")
-async def calculate(data: InputData):
+def _cleanup_file(path: str) -> None:
+    """Удаление временного файла PDF."""
     try:
-        logging.info("Получен post запрос", data=data)
-        # Создаем временный файл
-        with NamedTemporaryFile(delete=False, suffix=".pdf"):
-            temp_filename = create_receipt(data.model_dump())  # Создаем PDF во временном файле
+        if os.path.exists(path):
+            os.remove(path)
+            logger.info(f"Файл {path} удален.")
+    except Exception as e:
+        logger.error(f"Ошибка при удалении файла {path}: {e}")
 
-        # Отправляем файл и удаляем его после отправки
-        async def cleanup():
-            try:
-                if os.path.exists(temp_filename):
-                    os.remove(temp_filename)
-                    logging.info("Файл {temp_filename} удален.", temp_filename=temp_filename)
-            except Exception as error:
-                logging.error("Ошибка при удалении файла: {error}", error=error)
+
+# Эндпоинт для обработки POST-запроса
+# Поддерживаем оба варианта пути: со слэшем и без
+@app.post("/create_receipt")
+@app.post("/create_receipt/")
+async def calculate(data: InputData, background_tasks: BackgroundTasks):
+    try:
+        # Создаем временный файл для PDF
+        with NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+            temp_filename = tmp.name
+
+        # Генерируем квитанции.
+        # ВАЖНО: create_receipt может перезаписать FilePDF на основе поля Filename
+        # во входном JSON и возвращает фактический путь к созданному файлу.
+        pdf_path = create_receipt(data.model_dump(), FilePDF=temp_filename)
+
+        if not isinstance(pdf_path, str) or not os.path.exists(pdf_path):
+            # create_receipt может вернуть строку-ошибку вместо пути
+            logger.error(f"PDF файл не был создан: {pdf_path!r}")
+            raise HTTPException(
+                status_code=400,
+                detail=f"Не удалось сформировать квитанции: {pdf_path}",
+            )
+
+        # Удаляем фактический файл после отправки ответа
+        background_tasks.add_task(_cleanup_file, pdf_path)
+        # Если create_receipt вернул другой путь (из Filename), то удаляем и исходный temp-файл
+        if os.path.abspath(pdf_path) != os.path.abspath(temp_filename):
+            background_tasks.add_task(_cleanup_file, temp_filename)
 
         return StreamingResponse(
-            open(temp_filename, "rb"),
+            open(pdf_path, "rb"),
             media_type="application/pdf",
-            headers={"Content-Disposition": f"attachment; filename={temp_filename}"},
-            background=cleanup
+            headers={"Content-Disposition": 'attachment; filename=\"receipt.pdf\"'},
+            background=background_tasks,
         )
-    
+
+    except HTTPException:
+        # Уже подготовленный HTTPException пробрасываем как есть
+        raise
     except Exception as e:
+        logger.exception("Ошибка при формировании квитанций")
         raise HTTPException(status_code=400, detail=str(e))
 
 # Запуск приложения

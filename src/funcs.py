@@ -18,7 +18,7 @@ GROUP_NAME_POS = [-835, 580] # x, y
 PAGE_POS = [580, 7] # x, y
 def create_receipt(json_data: dict, FilePDF:str='Report.pdf'):
 
-    if json_data["Filename"]:
+    if json_data.get("Filename"):
         FilePDF = json_data["Filename"]
 
     c = canvas.Canvas(FilePDF, pagesize=A4)
@@ -47,7 +47,7 @@ def create_receipt(json_data: dict, FilePDF:str='Report.pdf'):
         c.drawString(230, y_pos + 162, "КПП")
         c.drawString(330, y_pos + 162, "№ " + json_data['AccNumb'])
         c.drawString(135, y_pos + 135, json_data['Bankname'])
-        c.drawString(285, y_pos + 135, "БИК " + json_data['BankBic'])
+        c.drawString(285, y_pos + 135, "БИК " + json_data.get('BankBic', ""))
         c.drawString(135, y_pos + 116, "ОКТМО")
         c.drawString(195, y_pos + 116, "КБК")
         c.drawString(135, y_pos + 105, PayerData['Purpose'])
