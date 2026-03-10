@@ -47,8 +47,8 @@ def create_receipt(json_data: dict, FilePDF:str='Report.pdf'):
         c.drawString(230, y_pos + 162, "КПП")
         c.drawString(330, y_pos + 162, "№ " + json_data['AccNumb'])
         c.drawString(135, y_pos + 135, json_data['Bankname'])
-        c.drawString(285, y_pos + 135, "БИК " + json_data.get('BankBic', ""))
-        c.drawString(135, y_pos + 116, "ОКТМО")
+        #c.drawString(285, y_pos + 135, "БИК " + json_data.get('BankBic', ""))
+        #c.drawString(135, y_pos + 116, "ОКТМО")
         c.drawString(195, y_pos + 116, "КБК")
         c.drawString(135, y_pos + 105, PayerData['Purpose'])
         c.drawString(135, y_pos + 81, "Ф.И.О. плательщика")
@@ -85,6 +85,11 @@ def create_receipt(json_data: dict, FilePDF:str='Report.pdf'):
     receipt_index = 1
     page = 1
     for group_ind, group in enumerate(json_data['Data']):
+        # При смене группы — перенос на следующую страницу, если текущая не пустая
+        if group_ind > 0 and receipt_index != 1:
+            page += 1
+            c.showPage()
+            receipt_index = 1
         for payer_ind, payer in enumerate(json_data['Data'][group_ind]["Data"]):
             if json_data['Data'][group_ind]["Data"][payer_ind]["SumTotal"] > 0:
                 draw_receipt(RECEIPT_POS[-1*receipt_index], json_data['Data'][group_ind]["Data"][payer_ind])
