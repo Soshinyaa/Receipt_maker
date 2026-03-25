@@ -79,6 +79,7 @@ fi
 echo "Запуск контейнера ${CONTAINER_NAME} на порту ${PORT}..."
 docker run -d \
     --name "$CONTAINER_NAME" \
+    --restart unless-stopped \
     -p "${PORT}:8000" \
     "$IMAGE_NAME"
 
