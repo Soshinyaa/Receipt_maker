@@ -12,6 +12,13 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
+
+@app.get("/health")
+@app.get("/health/")
+async def health():
+    """Простой healthcheck для мониторинга доступности сервиса."""
+    return {"status": "ok"}
+
 # Модели для входных данных
 class PaymentData(BaseModel):
     Payer: str
